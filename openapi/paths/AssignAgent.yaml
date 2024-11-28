@@ -1,0 +1,22 @@
+post:
+  tags:
+    - Recovery Agents
+  summary: >-
+    Assign agents to a user.  Agents are selected when enrolling a secret for
+    recovery.
+  description: The input can be an array with one or more AssignAgent records.
+  requestBody:
+    description: ''
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AssignAgent.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AssignAgent.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AssignAgent.yaml
+  responses:
+    '200':
+      description: OK

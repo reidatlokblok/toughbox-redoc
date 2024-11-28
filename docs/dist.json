@@ -1,0 +1,1628 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Lokblok Toughbox API",
+    "description": "Lokblok service API for key recovery.",
+    "termsOfService": "https://lokblok.co",
+    "contact": {
+      "name": "Contact",
+      "url": "https://lokblok.co"
+    },
+    "license": {
+      "name": "License",
+      "url": "https://lokblok.co"
+    },
+    "version": "2.2.3.41755"
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "paths": {
+    "/Login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticate for access to Toughbox services",
+        "description": "Login via username and password - IP address of server must also be registered for access to \r\nToughbox services, ensure a static IP address is used by the calling service.",
+        "requestBody": {
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginInfo"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginInfo"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/BearerToken"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/BearerToken"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/BearerToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetDelegates": {
+      "post": {
+        "tags": [
+          "Delegates"
+        ],
+        "summary": "Get a list of Delegates assigned to / selected by the user/ secret owner.  A delegate is an account\r\nthat is given authority to recover a secret on behalf of the user/owner.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Group": {
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Create a group within an organization.  Currently only a two level hierarchy is allowed; organization with multiple groups.",
+        "operationId": "Group",
+        "requestBody": {
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateGroup"
+                }
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateGroup"
+                }
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateGroup"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Group/Groups": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Group/Users": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/AssignAgent": {
+      "post": {
+        "tags": [
+          "Recovery Agents"
+        ],
+        "summary": "Assign agents to a user.  Agents are selected when enrolling a secret for recovery.",
+        "description": "The input can be an array with one or more AssignAgent records.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAgent"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAgent"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAgent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/CreateAgent": {
+      "post": {
+        "tags": [
+          "Recovery Agents"
+        ],
+        "summary": "Create user account for agents.",
+        "operationId": "CreateAgent",
+        "requestBody": {
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateAgent"
+                }
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateAgent"
+                }
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateAgent"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/AssignDelegates": {
+      "post": {
+        "tags": [
+          "Recovery Agents"
+        ],
+        "summary": "AssignDelegates assigns Delegate(s) to a user account.",
+        "description": "Assign delegates to a user.  The input can be an array with one or more Delegate records.",
+        "requestBody": {
+          "description": "AssignDelegates request data containing the user  to which the array of delegates will be assigned.",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignDelegates"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignDelegates"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignDelegates"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/GetAgents": {
+      "post": {
+        "tags": [
+          "Recovery Agents"
+        ],
+        "summary": "Get a list of Recovery Agents assigned to / selected by the user/ secret owner.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAgentsList"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAgentsList"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAgentsList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentsList"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentsList"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentsList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UpdateRecoverSecret": {
+      "post": {
+        "tags": [
+          "Secrets"
+        ],
+        "summary": "Update the recovery state with a wrapped split recovered by a Recovery Agent",
+        "operationId": "UpdateRecoverSecret",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentRecoveryRecord"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentRecoveryRecord"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentRecoveryRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/CompleteRecoverSecret": {
+      "post": {
+        "tags": [
+          "Secrets"
+        ],
+        "summary": "Complete the recovery and return the wrapped recovered secret.  Set 'Confirm' to false to retrieve the secret.\r\nSet 'Confirm' to true to confirm that the secret has been restored and the recovery process is complete.  This\r\nfinal step to confirm the recovery is required before any future recoveries may be started.",
+        "operationId": "CompleteRecoverSecret",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteRecoverSecret"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteRecoverSecret"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteRecoverSecret"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryResponseRecord"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryResponseRecord"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryResponseRecord"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EnrollSecret": {
+      "post": {
+        "tags": [
+          "Secrets"
+        ],
+        "summary": "Enroll a secret for recovery.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentRecord"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentRecord"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/GetSecretStatus": {
+      "post": {
+        "tags": [
+          "Secrets"
+        ],
+        "summary": "Get the current status for a secret enrolled for recovery.  The secret name is required.  Either the user or the recovery agent information should be provided.  Both are not necessary, but at least one is required.",
+        "operationId": "SecretStatus",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSecretStatus"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSecretStatus"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSecretStatus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecretStatus"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecretStatus"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecretStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/StartRecoverSecret": {
+      "post": {
+        "tags": [
+          "Secrets"
+        ],
+        "summary": "StartRecoverSecret - Start recovery of an enrolled secret.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoveryRequestRecord"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoveryRequestRecord"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoveryRequestRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryRequestRecord"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryRequestRecord"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryRequestRecord"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Toughcloud/ActivateToughcloudAccount": {
+      "post": {
+        "tags": [
+          "Toughcloud"
+        ],
+        "summary": "ActivateToughcloudAccount",
+        "description": "Activate or deactivate toughcloud for the specified user.",
+        "requestBody": {
+          "description": "License request containing the proof of posession jwt when activating a new account when the activate flag is true.  When activate flag is false, the toughcloud account will be deactivated (not implemented yet).",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/ToughcloudActivationRecord"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/ToughcloudActivationRecord"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/ToughcloudActivationRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Toughcloud/AuthorizeToughcloudAction": {
+      "post": {
+        "tags": [
+          "Toughcloud"
+        ],
+        "summary": "AuthorizeToughcloudAction",
+        "description": "Activate or deactivate toughcloud for the specified user.",
+        "requestBody": {
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/ToughcloudActionRequestRecord"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/ToughcloudActionRequestRecord"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/ToughcloudActionRequestRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Retrieves the UserRecord for the specified user.  This record includes the user's status, a list of their agents, enrolled keys and delegates.",
+        "operationId": "GetUser",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserRequest"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserRequest"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRecord"
+                }
+              },
+              "application/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRecord"
+                }
+              },
+              "text/json; x-api-version=2.2": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRecord"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AddRole": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Add a role of USER, AGENT or DELEGATE to the specified account.",
+        "description": "USER - enrolls and recovers keys; AGENT - assists users with recovery; DELEGATE - performs recovery on users behalf",
+        "operationId": "AddRole",
+        "requestBody": {
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoleRequest"
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoleRequest"
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/CreateUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create user account for key owners.",
+        "operationId": "CreateUser",
+        "requestBody": {
+          "content": {
+            "application/json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateUser"
+                }
+              }
+            },
+            "text/json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateUser"
+                }
+              }
+            },
+            "application/*+json; x-api-version=2.2": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateUser"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "description": "Put **_ONLY_** your JWT Bearer token on textbox below!",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "LoginInfo": {
+        "required": [
+          "organization",
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "organization": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BearerToken": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "required": [
+          "userGroup",
+          "userUsername"
+        ],
+        "type": "object",
+        "properties": {
+          "organization": {
+            "type": "string",
+            "nullable": true
+          },
+          "userGroup": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userUsername": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateGroup": {
+        "required": [
+          "groupName"
+        ],
+        "type": "object",
+        "properties": {
+          "groupName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "groupDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentGroup": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agent": {
+        "required": [
+          "agentGroup",
+          "agentUsername"
+        ],
+        "type": "object",
+        "properties": {
+          "organization": {
+            "type": "string",
+            "nullable": true
+          },
+          "agentUsername": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "agentGroup": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssignAgent": {
+        "required": [
+          "agents",
+          "usersGroup",
+          "userUsername"
+        ],
+        "type": "object",
+        "properties": {
+          "userUsername": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "usersGroup": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "agents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agent"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateAgent": {
+        "required": [
+          "group",
+          "rarType",
+          "recoveryAgentRecord",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "group": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "recoveryAgentRecord": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rarType": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Delegate": {
+        "required": [
+          "delegateUser",
+          "priorityLevel"
+        ],
+        "type": "object",
+        "properties": {
+          "delegateUser": {
+            "$ref": "#/components/schemas/User"
+          },
+          "priorityLevel": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssignDelegates": {
+        "required": [
+          "delegates",
+          "usersGroup",
+          "userUsername"
+        ],
+        "type": "object",
+        "properties": {
+          "userUsername": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "usersGroup": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "delegates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Delegate"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAgentsList": {
+        "required": [
+          "groupname"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecoveryAgentRecord": {
+        "required": [
+          "agentCredential",
+          "agentCredentialType",
+          "algorithm",
+          "groupname",
+          "organization",
+          "type",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "algorithm": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "organization": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "agentCredential": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "agentCredentialType": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AgentsList": {
+        "required": [
+          "groupname",
+          "organization",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "organization": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "agents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecoveryAgentRecord"
+            },
+            "nullable": true
+          },
+          "signedagents": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AgentRecoveryRecord": {
+        "type": "object",
+        "properties": {
+          "sessionID": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupname": {
+            "type": "string",
+            "nullable": true
+          },
+          "organization": {
+            "type": "string",
+            "nullable": true
+          },
+          "secretName": {
+            "type": "string",
+            "nullable": true
+          },
+          "secretType": {
+            "type": "string",
+            "nullable": true
+          },
+          "recoverySessionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "protectedSplit": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionTransportRequest": {
+        "type": "object",
+        "properties": {
+          "sessionID": {
+            "type": "string",
+            "nullable": true
+          },
+          "transportType": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientPublic": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompleteRecoverSecret": {
+        "required": [
+          "endRecovery",
+          "secretname",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "secretname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "endRecovery": {
+            "type": "boolean"
+          },
+          "sessionTransportRequest": {
+            "$ref": "#/components/schemas/SessionTransportRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecoveryResponseRecord": {
+        "type": "object",
+        "properties": {
+          "secretName": {
+            "type": "string",
+            "nullable": true
+          },
+          "secretType": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessionID": {
+            "type": "string",
+            "nullable": true
+          },
+          "recoverySessionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "protectedSplits": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AgentEnrollmentRecord": {
+        "type": "object",
+        "properties": {
+          "splitID": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "validationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "validationData": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "recoveryAgent": {
+            "$ref": "#/components/schemas/RecoveryAgentRecord"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ECDHPublicKey": {
+        "required": [
+          "crv",
+          "key_ops",
+          "kty",
+          "use",
+          "x",
+          "y"
+        ],
+        "type": "object",
+        "properties": {
+          "kty": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "crv": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "x": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "y": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "use": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "key_ops": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "EnrollmentRecord": {
+        "required": [
+          "agentEnrollmentRecords",
+          "enrollPublicKey",
+          "groupname",
+          "organization",
+          "secretID",
+          "secretName",
+          "secretType",
+          "threshold",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "organization": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "secretName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "secretType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "secretID": {
+            "type": "string",
+            "format": "byte"
+          },
+          "enrollPublicKey": {
+            "type": "string",
+            "format": "byte"
+          },
+          "threshold": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "agentEnrollmentRecords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentEnrollmentRecord"
+            }
+          },
+          "bfsvcpublickey": {
+            "$ref": "#/components/schemas/ECDHPublicKey"
+          },
+          "delegates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Delegate"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSecretStatus": {
+        "required": [
+          "secretname"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/Agent"
+          },
+          "secretname": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ENROLLED_KEY_STATE": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "SecretStatus": {
+        "type": "object",
+        "properties": {
+          "secretname": {
+            "type": "string",
+            "nullable": true
+          },
+          "secretId": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/ENROLLED_KEY_STATE"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "enrollRecord": {
+            "$ref": "#/components/schemas/EnrollmentRecord"
+          },
+          "recoverySessionID": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecoveryRequestRecord": {
+        "type": "object",
+        "properties": {
+          "enrollmentRecord": {
+            "$ref": "#/components/schemas/EnrollmentRecord"
+          },
+          "sessionID": {
+            "type": "string",
+            "nullable": true
+          },
+          "recoverySessionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "recoverySession": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ToughcloudGrants": {
+        "enum": [
+          "None",
+          "StaticKeys",
+          "AdhocKeys"
+        ],
+        "type": "string"
+      },
+      "ToughcloudActivationRecord": {
+        "required": [
+          "activate",
+          "rights",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "activate": {
+            "type": "boolean"
+          },
+          "popJwt": {
+            "type": "string",
+            "nullable": true
+          },
+          "appid": {
+            "type": "string",
+            "nullable": true
+          },
+          "ctyHdrValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "rights": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ToughcloudGrants"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ToughcloudActionRequestRecord": {
+        "required": [
+          "action",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "action": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "appid": {
+            "type": "string",
+            "nullable": true
+          },
+          "ctyHdrValue": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetUserRequest": {
+        "required": [
+          "groupname",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PUBLIC_ROLE": {
+        "enum": [
+          0,
+          3,
+          4,
+          8
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UserRecord": {
+        "required": [
+          "groupname",
+          "status",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "agents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PUBLIC_ROLE"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddRoleRequest": {
+        "required": [
+          "groupname",
+          "role",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "groupname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/PUBLIC_ROLE"
+          },
+          "agentRecord": {
+            "$ref": "#/components/schemas/RecoveryAgentRecord"
+          },
+          "rarType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateUser": {
+        "required": [
+          "group",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "group": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

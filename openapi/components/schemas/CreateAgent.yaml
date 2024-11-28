@@ -1,0 +1,20 @@
+required:
+  - group
+  - rarType
+  - recoveryAgentRecord
+  - username
+type: object
+properties:
+  username:
+    minLength: 1
+    type: string
+  group:
+    minLength: 1
+    type: string
+  recoveryAgentRecord:
+    minLength: 1
+    type: string
+  rarType:
+    minLength: 1
+    type: string
+additionalProperties: false

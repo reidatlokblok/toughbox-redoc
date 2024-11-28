@@ -1,0 +1,48 @@
+required:
+  - agentEnrollmentRecords
+  - enrollPublicKey
+  - groupname
+  - organization
+  - secretID
+  - secretName
+  - secretType
+  - threshold
+  - username
+type: object
+properties:
+  username:
+    minLength: 1
+    type: string
+  groupname:
+    minLength: 1
+    type: string
+  organization:
+    minLength: 1
+    type: string
+  secretName:
+    minLength: 1
+    type: string
+  secretType:
+    minLength: 1
+    type: string
+  secretID:
+    type: string
+    format: byte
+  enrollPublicKey:
+    type: string
+    format: byte
+  threshold:
+    type: integer
+    format: int32
+  agentEnrollmentRecords:
+    type: array
+    items:
+      $ref: .\AgentEnrollmentRecord.yaml
+  bfsvcpublickey:
+    $ref: .\ECDHPublicKey.yaml
+  delegates:
+    type: array
+    items:
+      $ref: .\Delegate.yaml
+    nullable: true
+additionalProperties: false

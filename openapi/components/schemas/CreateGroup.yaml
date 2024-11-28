@@ -1,0 +1,14 @@
+required:
+  - groupName
+type: object
+properties:
+  groupName:
+    minLength: 1
+    type: string
+  groupDescription:
+    type: string
+    nullable: true
+  parentGroup:
+    type: string
+    nullable: true
+additionalProperties: false

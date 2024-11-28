@@ -1,0 +1,23 @@
+post:
+  tags:
+    - Toughcloud
+  summary: AuthorizeToughcloudAction
+  description: Activate or deactivate toughcloud for the specified user.
+  requestBody:
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\ToughcloudActionRequestRecord.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\ToughcloudActionRequestRecord.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\ToughcloudActionRequestRecord.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain:
+          schema:
+            type: string

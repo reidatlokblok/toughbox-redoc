@@ -1,15 +1,13 @@
-required:
-  - userGroup
-  - userUsername
 type: object
 properties:
-  organization:
+  sessionID:
     type: string
     nullable: true
-  userGroup:
-    minLength: 1
+  transportType:
     type: string
-  userUsername:
-    minLength: 1
+    nullable: true
+  clientPublic:
     type: string
+    format: byte
+    nullable: true
 additionalProperties: false

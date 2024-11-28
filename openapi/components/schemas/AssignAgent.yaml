@@ -1,15 +1,17 @@
 required:
-  - userGroup
+  - agents
+  - usersGroup
   - userUsername
 type: object
 properties:
-  organization:
-    type: string
-    nullable: true
-  userGroup:
-    minLength: 1
-    type: string
   userUsername:
     minLength: 1
     type: string
+  usersGroup:
+    minLength: 1
+    type: string
+  agents:
+    type: array
+    items:
+      $ref: .\Agent.yaml
 additionalProperties: false

@@ -1,0 +1,32 @@
+required:
+  - agentCredential
+  - agentCredentialType
+  - algorithm
+  - groupname
+  - organization
+  - type
+  - username
+type: object
+properties:
+  type:
+    minLength: 1
+    type: string
+  algorithm:
+    minLength: 1
+    type: string
+  username:
+    minLength: 1
+    type: string
+  organization:
+    minLength: 1
+    type: string
+  groupname:
+    minLength: 1
+    type: string
+  agentCredential:
+    minLength: 1
+    type: string
+  agentCredentialType:
+    minLength: 1
+    type: string
+additionalProperties: false

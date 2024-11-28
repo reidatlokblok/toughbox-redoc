@@ -1,0 +1,17 @@
+required:
+  - action
+  - user
+type: object
+properties:
+  user:
+    $ref: .\User.yaml
+  action:
+    minLength: 1
+    type: string
+  appid:
+    type: string
+    nullable: true
+  ctyHdrValue:
+    type: string
+    nullable: true
+additionalProperties: false

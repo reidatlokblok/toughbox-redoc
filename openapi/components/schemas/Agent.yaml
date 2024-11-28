@@ -1,15 +1,15 @@
 required:
-  - userGroup
-  - userUsername
+  - agentGroup
+  - agentUsername
 type: object
 properties:
   organization:
     type: string
     nullable: true
-  userGroup:
+  agentUsername:
     minLength: 1
     type: string
-  userUsername:
+  agentGroup:
     minLength: 1
     type: string
 additionalProperties: false

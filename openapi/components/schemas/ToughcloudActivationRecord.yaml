@@ -1,0 +1,24 @@
+required:
+  - activate
+  - rights
+  - user
+type: object
+properties:
+  user:
+    $ref: .\User.yaml
+  activate:
+    type: boolean
+  popJwt:
+    type: string
+    nullable: true
+  appid:
+    type: string
+    nullable: true
+  ctyHdrValue:
+    type: string
+    nullable: true
+  rights:
+    type: array
+    items:
+      $ref: .\ToughcloudGrants.yaml
+additionalProperties: false

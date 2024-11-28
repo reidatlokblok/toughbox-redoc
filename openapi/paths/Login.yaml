@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Authentication
+  summary: Authenticate for access to Toughbox services
+  description: "Login via username and password - IP address of server must also be registered for access to \r\nToughbox services, ensure a static IP address is used by the calling service."
+  requestBody:
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\LoginInfo.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\LoginInfo.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\LoginInfo.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\BearerToken.yaml
+        application/json; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\BearerToken.yaml
+        text/json; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\BearerToken.yaml

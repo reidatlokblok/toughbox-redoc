@@ -1,0 +1,24 @@
+required:
+  - groupname
+  - organization
+  - username
+type: object
+properties:
+  username:
+    minLength: 1
+    type: string
+  organization:
+    minLength: 1
+    type: string
+  groupname:
+    minLength: 1
+    type: string
+  agents:
+    type: array
+    items:
+      $ref: .\RecoveryAgentRecord.yaml
+    nullable: true
+  signedagents:
+    type: string
+    nullable: true
+additionalProperties: false

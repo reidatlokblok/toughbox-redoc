@@ -1,15 +1,12 @@
 required:
-  - userGroup
-  - userUsername
+  - groupname
+  - username
 type: object
 properties:
-  organization:
-    type: string
-    nullable: true
-  userGroup:
+  groupname:
     minLength: 1
     type: string
-  userUsername:
+  username:
     minLength: 1
     type: string
 additionalProperties: false

@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Delegates
+  summary: "Get a list of Delegates assigned to / selected by the user/ secret owner.  A delegate is an account\r\nthat is given authority to recover a secret on behalf of the user/owner."
+  requestBody:
+    description: ''
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\User.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\User.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\User.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain; x-api-version=2.2:
+          schema:
+            type: string
+        application/json; x-api-version=2.2:
+          schema:
+            type: string
+        text/json; x-api-version=2.2:
+          schema:
+            type: string

@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Users
+  summary: Create user account for key owners.
+  operationId: CreateUser
+  requestBody:
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateUser.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateUser.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateUser.yaml
+  responses:
+    '200':
+      description: OK

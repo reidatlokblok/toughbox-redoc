@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Recovery Agents
+  summary: Create user account for agents.
+  operationId: CreateAgent
+  requestBody:
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateAgent.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateAgent.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateAgent.yaml
+  responses:
+    '200':
+      description: OK

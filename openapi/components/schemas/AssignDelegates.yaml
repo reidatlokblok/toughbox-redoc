@@ -1,15 +1,17 @@
 required:
-  - userGroup
+  - delegates
+  - usersGroup
   - userUsername
 type: object
 properties:
-  organization:
-    type: string
-    nullable: true
-  userGroup:
-    minLength: 1
-    type: string
   userUsername:
     minLength: 1
     type: string
+  usersGroup:
+    minLength: 1
+    type: string
+  delegates:
+    type: array
+    items:
+      $ref: .\Delegate.yaml
 additionalProperties: false

@@ -1,0 +1,16 @@
+type: object
+properties:
+  splitID:
+    type: string
+    format: byte
+    nullable: true
+  validationType:
+    type: string
+    nullable: true
+  validationData:
+    type: string
+    format: byte
+    nullable: true
+  recoveryAgent:
+    $ref: .\RecoveryAgentRecord.yaml
+additionalProperties: false

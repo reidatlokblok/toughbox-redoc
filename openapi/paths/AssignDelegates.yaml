@@ -1,0 +1,24 @@
+post:
+  tags:
+    - Recovery Agents
+  summary: AssignDelegates assigns Delegate(s) to a user account.
+  description: >-
+    Assign delegates to a user.  The input can be an array with one or more
+    Delegate records.
+  requestBody:
+    description: >-
+      AssignDelegates request data containing the user  to which the array of
+      delegates will be assigned.
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AssignDelegates.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AssignDelegates.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AssignDelegates.yaml
+  responses:
+    '200':
+      description: OK

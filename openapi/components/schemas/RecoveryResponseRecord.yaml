@@ -1,0 +1,19 @@
+type: object
+properties:
+  secretName:
+    type: string
+    nullable: true
+  secretType:
+    type: string
+    nullable: true
+  sessionID:
+    type: string
+    nullable: true
+  recoverySessionType:
+    type: string
+    nullable: true
+  protectedSplits:
+    type: string
+    format: byte
+    nullable: true
+additionalProperties: false

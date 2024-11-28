@@ -1,0 +1,31 @@
+post:
+  tags:
+    - Recovery Agents
+  summary: >-
+    Get a list of Recovery Agents assigned to / selected by the user/ secret
+    owner.
+  requestBody:
+    description: ''
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\GetAgentsList.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\GetAgentsList.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\GetAgentsList.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\AgentsList.yaml
+        application/json; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\AgentsList.yaml
+        text/json; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\AgentsList.yaml

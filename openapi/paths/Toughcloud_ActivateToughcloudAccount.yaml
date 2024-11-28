@@ -1,0 +1,23 @@
+post:
+  tags:
+    - Toughcloud
+  summary: ActivateToughcloudAccount
+  description: Activate or deactivate toughcloud for the specified user.
+  requestBody:
+    description: >-
+      License request containing the proof of posession jwt when activating a
+      new account when the activate flag is true.  When activate flag is false,
+      the toughcloud account will be deactivated (not implemented yet).
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\ToughcloudActivationRecord.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\ToughcloudActivationRecord.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\ToughcloudActivationRecord.yaml
+  responses:
+    '200':
+      description: OK

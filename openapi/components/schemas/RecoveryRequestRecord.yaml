@@ -1,0 +1,15 @@
+type: object
+properties:
+  enrollmentRecord:
+    $ref: .\EnrollmentRecord.yaml
+  sessionID:
+    type: string
+    nullable: true
+  recoverySessionType:
+    type: string
+    nullable: true
+  recoverySession:
+    type: string
+    format: byte
+    nullable: true
+additionalProperties: false

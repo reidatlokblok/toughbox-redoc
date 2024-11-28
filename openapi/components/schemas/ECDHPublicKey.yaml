@@ -1,0 +1,29 @@
+required:
+  - crv
+  - key_ops
+  - kty
+  - use
+  - x
+  - 'y'
+type: object
+properties:
+  kty:
+    minLength: 1
+    type: string
+  crv:
+    minLength: 1
+    type: string
+  x:
+    minLength: 1
+    type: string
+  'y':
+    minLength: 1
+    type: string
+  use:
+    minLength: 1
+    type: string
+  key_ops:
+    type: array
+    items:
+      type: string
+additionalProperties: false

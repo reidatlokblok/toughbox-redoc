@@ -1,0 +1,32 @@
+post:
+  tags:
+    - Users
+  summary: >-
+    Retrieves the UserRecord for the specified user.  This record includes the
+    user's status, a list of their agents, enrolled keys and delegates.
+  operationId: GetUser
+  requestBody:
+    description: ''
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\GetUserRequest.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\GetUserRequest.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\GetUserRequest.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\UserRecord.yaml
+        application/json; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\UserRecord.yaml
+        text/json; x-api-version=2.2:
+          schema:
+            $ref: ..\components\schemas\UserRecord.yaml

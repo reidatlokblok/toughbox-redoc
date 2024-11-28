@@ -1,0 +1,27 @@
+post:
+  tags:
+    - Groups
+  summary: >-
+    Create a group within an organization.  Currently only a two level hierarchy
+    is allowed; organization with multiple groups.
+  operationId: Group
+  requestBody:
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateGroup.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateGroup.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          type: array
+          items:
+            $ref: ..\components\schemas\CreateGroup.yaml
+  responses:
+    '200':
+      description: OK

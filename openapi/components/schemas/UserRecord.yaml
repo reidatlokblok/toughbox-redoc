@@ -1,0 +1,31 @@
+required:
+  - groupname
+  - status
+  - username
+type: object
+properties:
+  groupname:
+    minLength: 1
+    type: string
+  username:
+    minLength: 1
+    type: string
+  status:
+    type: integer
+    format: int32
+  agents:
+    type: array
+    items:
+      type: string
+    nullable: true
+  keys:
+    type: array
+    items:
+      type: string
+    nullable: true
+  roles:
+    type: array
+    items:
+      $ref: .\PUBLIC_ROLE.yaml
+    nullable: true
+additionalProperties: false

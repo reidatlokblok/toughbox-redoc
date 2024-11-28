@@ -1,0 +1,8 @@
+required:
+  - token
+type: object
+properties:
+  token:
+    minLength: 1
+    type: string
+additionalProperties: false

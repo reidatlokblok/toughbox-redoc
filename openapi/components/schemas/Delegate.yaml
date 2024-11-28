@@ -1,0 +1,11 @@
+required:
+  - delegateUser
+  - priorityLevel
+type: object
+properties:
+  delegateUser:
+    $ref: .\User.yaml
+  priorityLevel:
+    type: integer
+    format: int32
+additionalProperties: false

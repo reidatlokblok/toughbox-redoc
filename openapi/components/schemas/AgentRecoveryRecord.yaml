@@ -1,0 +1,28 @@
+type: object
+properties:
+  sessionID:
+    type: string
+    nullable: true
+  username:
+    type: string
+    nullable: true
+  groupname:
+    type: string
+    nullable: true
+  organization:
+    type: string
+    nullable: true
+  secretName:
+    type: string
+    nullable: true
+  secretType:
+    type: string
+    nullable: true
+  recoverySessionType:
+    type: string
+    nullable: true
+  protectedSplit:
+    type: string
+    format: byte
+    nullable: true
+additionalProperties: false

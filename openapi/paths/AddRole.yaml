@@ -1,0 +1,22 @@
+post:
+  tags:
+    - Users
+  summary: Add a role of USER, AGENT or DELEGATE to the specified account.
+  description: >-
+    USER - enrolls and recovers keys; AGENT - assists users with recovery;
+    DELEGATE - performs recovery on users behalf
+  operationId: AddRole
+  requestBody:
+    content:
+      application/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AddRoleRequest.yaml
+      text/json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AddRoleRequest.yaml
+      application/*+json; x-api-version=2.2:
+        schema:
+          $ref: ..\components\schemas\AddRoleRequest.yaml
+  responses:
+    '200':
+      description: OK
