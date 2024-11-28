@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "info": {
     "title": "Lokblok Toughbox API",
     "description": "Lokblok service API for key recovery.",
@@ -14,6 +14,20 @@
     },
     "version": "2.2.3.41755"
   },
+  "servers": [
+    {
+      "url": "https://{tenant}/api/v1",
+      "variables": {
+        "tenant": {
+          "default": "www",
+          "description": "Your tenant id"
+        }
+      }
+    },
+    {
+      "url": "https://example.com/api/v1"
+    }
+  ],
   "security": [
     {
       "bearer": []
@@ -167,7 +181,7 @@
         "tags": [
           "Groups"
         ],
-        "summary": "",
+        "summary": "Get a list of groups",
         "parameters": [
           {
             "name": "page",
@@ -200,7 +214,7 @@
         "tags": [
           "Groups"
         ],
-        "summary": "",
+        "summary": "Get a list of groups",
         "parameters": [
           {
             "name": "group",

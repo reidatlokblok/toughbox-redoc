@@ -1,7 +1,7 @@
 get:
   tags:
     - Groups
-  summary: ''
+  summary: Get a list of groups
   parameters:
     - name: group
       in: query

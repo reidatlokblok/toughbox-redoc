@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Lokblok Toughbox API
   description: Lokblok service API for key recovery.
@@ -10,6 +10,13 @@ info:
     name: License
     url: https://lokblok.co
   version: 2.2.3.41755
+servers:
+  - url: https://{tenant}/api/v1
+    variables:
+      tenant:
+        default: www
+        description: Your tenant id
+  - url: https://example.com/api/v1
 security:
   - bearer: []
 paths:
@@ -103,7 +110,7 @@ paths:
     get:
       tags:
         - Groups
-      summary: ''
+      summary: Get a list of groups
       parameters:
         - name: page
           in: query
@@ -124,7 +131,7 @@ paths:
     get:
       tags:
         - Groups
-      summary: ''
+      summary: Get a list of groups
       parameters:
         - name: group
           in: query
@@ -520,7 +527,6 @@ components:
           $ref: '#/components/schemas/RecoveryAgentRecord'
         rarType:
           type: string
-          nullable: true
       additionalProperties: false
     Agent:
       required:
@@ -530,7 +536,6 @@ components:
       properties:
         organization:
           type: string
-          nullable: true
         agentUsername:
           minLength: 1
           type: string
@@ -544,14 +549,11 @@ components:
         splitID:
           type: string
           format: byte
-          nullable: true
         validationType:
           type: string
-          nullable: true
         validationData:
           type: string
           format: byte
-          nullable: true
         recoveryAgent:
           $ref: '#/components/schemas/RecoveryAgentRecord'
       additionalProperties: false
@@ -560,29 +562,21 @@ components:
       properties:
         sessionID:
           type: string
-          nullable: true
         username:
           type: string
-          nullable: true
         groupname:
           type: string
-          nullable: true
         organization:
           type: string
-          nullable: true
         secretName:
           type: string
-          nullable: true
         secretType:
           type: string
-          nullable: true
         recoverySessionType:
           type: string
-          nullable: true
         protectedSplit:
           type: string
           format: byte
-          nullable: true
       additionalProperties: false
     AgentsList:
       required:
@@ -604,10 +598,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RecoveryAgentRecord'
-          nullable: true
         signedagents:
           type: string
-          nullable: true
       additionalProperties: false
     AssignAgent:
       required:
@@ -702,10 +694,8 @@ components:
           type: string
         groupDescription:
           type: string
-          nullable: true
         parentGroup:
           type: string
-          nullable: true
       additionalProperties: false
     CreateUser:
       required:
@@ -820,7 +810,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Delegate'
-          nullable: true
       additionalProperties: false
     GetAgentsList:
       required:
@@ -829,7 +818,6 @@ components:
       properties:
         username:
           type: string
-          nullable: true
         groupname:
           minLength: 1
           type: string
@@ -925,69 +913,54 @@ components:
           $ref: '#/components/schemas/EnrollmentRecord'
         sessionID:
           type: string
-          nullable: true
         recoverySessionType:
           type: string
-          nullable: true
         recoverySession:
           type: string
           format: byte
-          nullable: true
       additionalProperties: false
     RecoveryResponseRecord:
       type: object
       properties:
         secretName:
           type: string
-          nullable: true
         secretType:
           type: string
-          nullable: true
         sessionID:
           type: string
-          nullable: true
         recoverySessionType:
           type: string
-          nullable: true
         protectedSplits:
           type: string
           format: byte
-          nullable: true
       additionalProperties: false
     SecretStatus:
       type: object
       properties:
         secretname:
           type: string
-          nullable: true
         secretId:
           type: string
           format: byte
-          nullable: true
         status:
           $ref: '#/components/schemas/ENROLLED_KEY_STATE'
         description:
           type: string
-          nullable: true
         enrollRecord:
           $ref: '#/components/schemas/EnrollmentRecord'
         recoverySessionID:
           type: string
-          nullable: true
       additionalProperties: false
     SessionTransportRequest:
       type: object
       properties:
         sessionID:
           type: string
-          nullable: true
         transportType:
           type: string
-          nullable: true
         clientPublic:
           type: string
           format: byte
-          nullable: true
       additionalProperties: false
     ToughcloudActionRequestRecord:
       required:
@@ -1002,10 +975,8 @@ components:
           type: string
         appid:
           type: string
-          nullable: true
         ctyHdrValue:
           type: string
-          nullable: true
       additionalProperties: false
     ToughcloudActivationRecord:
       required:
@@ -1020,13 +991,10 @@ components:
           type: boolean
         popJwt:
           type: string
-          nullable: true
         appid:
           type: string
-          nullable: true
         ctyHdrValue:
           type: string
-          nullable: true
         rights:
           type: array
           items:
@@ -1046,7 +1014,6 @@ components:
       properties:
         organization:
           type: string
-          nullable: true
         userGroup:
           minLength: 1
           type: string
@@ -1074,17 +1041,14 @@ components:
           type: array
           items:
             type: string
-          nullable: true
         keys:
           type: array
           items:
             type: string
-          nullable: true
         roles:
           type: array
           items:
             $ref: '#/components/schemas/PUBLIC_ROLE'
-          nullable: true
       additionalProperties: false
   securitySchemes:
     bearer:
